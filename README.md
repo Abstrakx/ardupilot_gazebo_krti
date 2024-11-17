@@ -348,10 +348,3 @@ Kemudian pilih /roscam/cam/image_raw
 
 Anda seharusnya melihat feed langsung dari dalam gazebo
 
-## Catatan dan komentar akhir
-
-Setiap kode untuk KRTI 2024 ada di folder:
-`src/ardupilot_gazebo/krti_test`
-
-VTOL GASKEN....!!!!!!
-
