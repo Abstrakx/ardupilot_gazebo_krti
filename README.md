@@ -143,6 +143,12 @@ Muat ulang path (log-out dan log-in untuk membuat permanen):
 . ~/.profile
 ````
 
+Sekarang melakukan proses build pada SITL kita : 
+````
+./waf configure --board sitl
+./waf copter 
+````
+
 ### Finalisasi dan uji instalasi
 
 Untuk memulai simulator, pertama-tama pindah ke direktori kendaraan. Misalnya, untuk kode multicopter pindah ke ardupilot/ArduCopter:
@@ -237,9 +243,9 @@ source /opt/ros/melodic/setup.bash
 # Klon paket Gazebo ROS kustom
 cd ~/
 
-git clone https://github.com/r0ch1n/ardupilot_gazebo_roscam
+git clone https://github.com/Abstrakx/ardupilot_gazebo_krti.git
 
-cd ardupilot_gazebo_roscam
+cd ardupilot_gazebo_krti
 
 catkin init
 
@@ -253,12 +259,12 @@ catkin build
 
 # Tambahkan model dan plugin Kustom ke Gazebo
 export GAZEBO_MODEL_PATH=~/ardupilot_gazebo/models:$GAZEBO_MODEL_PATH
-export GAZEBO_MODEL_PATH=~/ardupilot_gazebo_roscam/src/ardupilot_gazebo/models:$GAZEBO_MODEL_PATH
+export GAZEBO_MODEL_PATH=~/ardupilot_gazebo_krti/src/ardupilot_gazebo/models:$GAZEBO_MODEL_PATH
 export GAZEBO_PLUGIN_PATH=/usr/lib/x86_64-linux-gnu/gazebo-9/plugins:$GAZEBO_PLUGIN_PATH 
 export GAZEBO_PLUGIN_PATH=/opt/ros/melodic/lib:$GAZEBO_PLUGIN_PATH
 
 # Uji instalasi
-source ~/ardupilot_gazebo_roscam/devel/setup.bash
+source ~/ardupilot_gazebo_krti/devel/setup.bash
 
 roslaunch ardupilot_gazebo iris_with_roscam.launch
 ````
@@ -313,15 +319,15 @@ Buka satu Terminal dan jalankan Gazebo terintegrasi ROS
 source /opt/ros/melodic/setup.bash
 
 export GAZEBO_MODEL_PATH=~/ardupilot_gazebo/models:$GAZEBO_MODEL_PATH
-export GAZEBO_MODEL_PATH=~/ardupilot_gazebo_roscam/src/ardupilot_gazebo/models:$GAZEBO_MODEL_PATH
+export GAZEBO_MODEL_PATH=~/ardupilot_gazebo_krti/src/ardupilot_gazebo/models:$GAZEBO_MODEL_PATH
 export GAZEBO_PLUGIN_PATH=/usr/lib/x86_64-linux-gnu/gazebo-9/plugins:$GAZEBO_PLUGIN_PATH 
 export GAZEBO_PLUGIN_PATH=/opt/ros/melodic/lib:$GAZEBO_PLUGIN_PATH
 
 #Jalankan Gazebo terintegrasi ROS
 
-source ~/ardupilot_gazebo_roscam/devel/setup.bash
+source ~/ardupilot_gazebo_krti/devel/setup.bash
 
-roslaunch ardupilot_gazebo iris_with_roscam.launch
+roslaunch ardupilot_gazebo krti.launch
 ````
 
 ### Jalankan SITL Ardupilot
@@ -333,10 +339,17 @@ cd ~/ardupilot/ArduCopter
 
 sim_vehicle.py -f gazebo-iris --console --map
 ````
+### Jalankan MAVROS Node
 
-### Berlangganan feed roscam virtual
+Buka Terminal ketiga dan jalankan SITL Ardupilot
 
-Buka Terminal ketiga dan RTL
+````
+roslaunch mavros apm.launch fcu_url:=udp://:14550@
+````
+
+### Subscribe topic feed roscam virtual
+
+Buka Terminal keempat dan RTL
 
 ````
 rqt
