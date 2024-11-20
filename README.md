@@ -107,7 +107,12 @@ sudo apt-get install ros-noetic-rqt ros-noetic-rqt-common-plugins ros-noetic-rqt
 
 ### Instal catkin tools
 ````
-sudo apt-get install python-catkin-tools
+sudo sh \
+    -c 'echo "deb http://packages.ros.org/ros/ubuntu `lsb_release -sc` main" \
+        > /etc/apt/sources.list.d/ros-latest.list'
+wget http://packages.ros.org/ros.key -O - | sudo apt-key add -
+sudo apt-get update
+sudo apt-get install python3-catkin-tools
 ````
 
 Sekarang setelah kita memiliki semua yang terinstal dengan benar, kita dapat memulai konfigurasi sistem
@@ -124,10 +129,8 @@ Instruksi diambil dari ardupilot.org (Lihat instruksi asli di http://ardupilot.o
 
 ### Klon repositori ArduPilot
 ````
-cd ~/
-git clone https://github.com/r0ch1n/ardupilot
+git clone --recurse-submodules https://github.com/ArduPilot/ardupilot.git
 cd ardupilot
-git submodule update --init --recursive
 ````
 
 ### Instal beberapa paket yang diperlukan
@@ -135,7 +138,7 @@ git submodule update --init --recursive
 Jika Anda menggunakan sistem berbasis debian (seperti Ubuntu atau Mint), kami menyediakan skrip yang akan melakukannya untuk Anda. Dari direktori ardupilot:
 
 ````
-Tools/scripts/install-prereqs-ubuntu.sh -y
+Tools/environment_install/install-prereqs-ubuntu.sh -y
 ````
 
 Muat ulang path (log-out dan log-in untuk membuat permanen):
@@ -147,6 +150,10 @@ Sekarang melakukan proses build pada SITL kita :
 ````
 ./waf configure --board sitl
 ./waf copter 
+````
+Reboot perangkat sebelum menguji SITL yang sudah diinstall
+````
+sudo reboot
 ````
 
 ### Finalisasi dan uji instalasi
